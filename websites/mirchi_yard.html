@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guntur Mirchi Live</title>
+  <meta name="theme-color" content="#b31217" />
+  <style>
+    :root{
+      --bg:#fff8ef;
+      --card:#ffffff;
+      --text:#1f1f1f;
+      --muted:#5c5c5c;
+      --primary:#b31217;
+      --primary-dark:#871015;
+      --accent:#f59e0b;
+      --green:#15803d;
+      --red:#dc2626;
+      --amber:#b45309;
+      --border:#eadfce;
+      --shadow:0 10px 30px rgba(0,0,0,.08);
+      --radius:20px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans Telugu, sans-serif;
+      background: linear-gradient(180deg,#fff7e8 0%, #fffdf8 100%);
+      color:var(--text);
+    }
+
+    .container{
+      width:min(100% - 24px, 760px);
+      margin-inline:auto;
+    }
+
+    .hero{
+      background: linear-gradient(135deg, #8f0f13 0%, #b31217 52%, #d62828 100%);
+      color:#fff;
+      padding:24px 16px 28px;
+      position:sticky;
+      top:0;
+      z-index:10;
+      box-shadow:0 6px 20px rgba(0,0,0,.18);
+    }
+
+    .brand{
+      text-align:center;
+    }
+
+    .brand-tag{
+      display:inline-block;
+      font-size:13px;
+      letter-spacing:.14em;
+      font-weight:800;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.22);
+      padding:8px 14px;
+      border-radius:999px;
+      margin-bottom:14px;
+    }
+
+    h1{
+      margin:0;
+      font-size:clamp(30px, 6vw, 52px);
+      line-height:1.05;
+      font-weight:900;
+    }
+
+    .sub{
+      margin-top:10px;
+      font-size:clamp(18px, 4vw, 28px);
+      font-weight:800;
+    }
+
+    .meta{
+      margin-top:18px;
+      text-align:center;
+      font-size:15px;
+      color:#ffe9cf;
+      font-weight:700;
+    }
+
+    .actions{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .btn{
+      border:none;
+      border-radius:16px;
+      min-height:52px;
+      padding:12px 10px;
+      font-size:15px;
+      font-weight:800;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+
+    .btn:active{transform:scale(.98)}
+    .btn-primary{
+      background:#fff;
+      color:var(--primary);
+    }
+    .btn-secondary{
+      background:#ffd9b3;
+      color:#7c2d12;
+    }
+    .btn-outline{
+      background:rgba(255,255,255,.14);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.25);
+    }
+
+    main{
+      padding:18px 0 36px;
+    }
+
+    .panel{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px;
+      margin-bottom:16px;
+    }
+
+    .calendar-title{
+      color:var(--muted);
+      font-size:14px;
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    .calendar-date{
+      font-size:30px;
+      font-weight:900;
+      color:var(--primary);
+      margin-bottom:8px;
+    }
+
+    .calendar-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      font-weight:700;
+    }
+
+    .status{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      background:#ecfdf3;
+      color:#166534;
+      padding:10px 14px;
+      border-radius:999px;
+      font-size:14px;
+      border:1px solid #bbf7d0;
+    }
+
+    .dot{
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:#16a34a;
+      box-shadow:0 0 0 4px rgba(22,163,74,.12);
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+    }
+
+    .stat-box{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:16px;
+    }
+
+    .stat-label{
+      color:var(--muted);
+      font-size:14px;
+      font-weight:700;
+      margin-bottom:8px;
+    }
+
+    .stat-value{
+      font-size:34px;
+      font-weight:900;
+      color:var(--primary);
+      line-height:1;
+    }
+
+    .stat-unit{
+      margin-top:4px;
+      font-size:15px;
+      font-weight:800;
+    }
+
+    .trend-text{
+      font-size:18px;
+      font-weight:900;
+      color:#7c2d12;
+      margin-top:8px;
+    }
+
+    .card{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:18px;
+      margin-bottom:16px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0 auto 0 0;
+      width:8px;
+      background:linear-gradient(180deg,#f59e0b,#b31217);
+    }
+
+    .card-header{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:start;
+      margin-bottom:14px;
+      padding-left:8px;
+    }
+
+    .title-wrap h2{
+      margin:0;
+      font-size:28px;
+      font-weight:900;
+      color:#7f1015;
+    }
+
+    .latin{
+      margin-top:4px;
+      color:var(--muted);
+      font-size:15px;
+      font-weight:700;
+    }
+
+    .badge{
+      font-size:14px;
+      font-weight:900;
+      border-radius:999px;
+      padding:10px 12px;
+      white-space:nowrap;
+    }
+
+    .up{background:#ecfdf3;color:#166534}
+    .flat{background:#f3f4f6;color:#374151}
+    .down{background:#fef2f2;color:#b91c1c}
+
+    .price-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      padding-left:8px;
+    }
+
+    .price{
+      background:#fffaf3;
+      border:1px solid #f3dfbb;
+      border-radius:16px;
+      padding:14px 10px;
+      text-align:center;
+    }
+
+    .price-label{
+      font-size:14px;
+      color:#6b7280;
+      font-weight:800;
+      min-height:36px;
+    }
+
+    .price-value{
+      margin-top:8px;
+      font-size:24px;
+      font-weight:900;
+      color:#111827;
+    }
+
+    .share{
+      margin-top:14px;
+      width:100%;
+      background:#25D366;
+      color:#fff;
+      border:none;
+      border-radius:16px;
+      padding:14px;
+      font-size:15px;
+      font-weight:900;
+      cursor:pointer;
+    }
+
+    .section-label{
+      display:inline-block;
+      color:#fff;
+      background:#111827;
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.12em;
+      margin-bottom:14px;
+    }
+
+    .section-title{
+      font-size:28px;
+      line-height:1.1;
+      margin:0 0 10px;
+      font-weight:900;
+      color:#111827;
+    }
+
+    .section-text{
+      color:#333;
+      font-size:16px;
+      line-height:1.75;
+      font-weight:600;
+    }
+
+    .legal h3{
+      margin:18px 0 10px;
+      font-size:22px;
+      color:#111827;
+    }
+
+    .legal ol, .legal ul{
+      margin:0;
+      padding-left:20px;
+    }
+
+    .legal li{
+      margin-bottom:10px;
+      line-height:1.7;
+      font-size:15px;
+      color:#2c2c2c;
+      font-weight:600;
+    }
+
+    footer{
+      text-align:center;
+      color:#fff;
+      background:#111827;
+      padding:18px 14px 28px;
+      font-size:15px;
+      font-weight:800;
+      margin-top:20px;
+    }
+
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:20px;
+      transform:translateX(-50%) translateY(20px);
+      background:#111827;
+      color:#fff;
+      padding:12px 16px;
+      border-radius:12px;
+      font-weight:800;
+      font-size:14px;
+      opacity:0;
+      pointer-events:none;
+      transition:.25s ease;
+      z-index:100;
+    }
+
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(0);
+    }
+
+    @media (max-width:640px){
+      .actions{grid-template-columns:1fr}
+      .stats{grid-template-columns:1fr}
+      .price-grid{grid-template-columns:1fr}
+      .calendar-date{font-size:26px}
+      .card-header{flex-direction:column}
+      .badge{align-self:flex-start}
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container brand">
+      <div class="brand-tag">GUNTUR MIRCHI LIVE</div>
+      <h1>గుంటూరు మిర్చి మార్కెట్<br>లైవ్ ధరలు</h1>
+      <div class="sub">నేటి అధికారిక ధరల పట్టిక - మే 2026</div>
+      <div class="meta">చివరి అప్‌డేట్: నేడు సాయంత్రం 5:00 గంటలకు</div>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="speakBtn">ధరలు వినండి</button>
+        <button class="btn btn-secondary" id="toggleYesterdayBtn">నిన్నటి ధరలు చూడండి</button>
+        <button class="btn btn-outline" onclick="document.getElementById('calendar').scrollIntoView({behavior:'smooth'})">మార్కెట్ క్యాలెండర్</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="panel" id="calendar">
+      <div class="calendar-title">మార్కెట్ తేదీ</div>
+      <div class="calendar-date" id="dateText">24 మే 2026</div>
+      <div class="calendar-row" style="margin-bottom:12px;">
+        <div><strong>వారం:</strong> <span id="dayText">ఆదివారం</span></div>
+      </div>
+      <div class="status">
+        <span class="dot"></span>
+        మార్కెట్ తెరిచి ఉంది · వేలం పాటలు జరుగుతున్నాయి
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="stats">
+        <div class="stat-box">
+          <div class="stat-label">నేడు మార్కెట్‌కు వచ్చిన మిర్చి బస్తాల సంఖ్య</div>
+          <div class="stat-value">75,000</div>
+          <div class="stat-unit">బస్తాలు</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">మార్కెట్ ట్రేడింగ్ సరళి</div>
+          <div class="trend-text">స్థిరంగా ఉంది</div>
+        </div>
+      </div>
+    </section>
+
+    <div id="cards"></div>
+
+    <section class="panel">
+      <div class="section-label">OFFICIAL</div>
+      <h2 class="section-title">గౌరవ వందనాలు & కృతజ్ఞతలు</h2>
+      <p class="section-text">
+        గుంటూరు వ్యవసాయ మార్కెట్ కమిటీ (AMC) నూతన చైర్మన్ వర్యులు గౌరవనీయులు
+        <strong>శ్రీ కుర్రా అప్పారావు</strong> గారికి, ఆంధ్రప్రదేశ్ ప్రభుత్వానికి మరియు స్థానిక
+        ప్రజాప్రతినిధులకు మా హృదయపూర్వక ధన్యవాదాలు. మిర్చి రైతులకు పారదర్శకమైన
+        సమాచారాన్ని అందిస్తూ, మార్కెట్ వ్యవస్థను డిజిటలైజ్ చేయాలనే వారి ఆశయాలకు
+        అనుగుణంగా ఈ ఉచిత వెబ్‌సైట్ రూపకల్పన చేయబడింది.
+      </p>
+    </section>
+
+    <section class="panel legal">
+      <h2 class="section-title">నిబంధనలు మరియు షరతులు</h2>
+      <ol>
+        <li>ఈ వెబ్‌సైట్‌లో చూపించే ధరలు కేవలం గుంటూరు మిర్చి యార్డ్‌లోని మా నమ్మకమైన లైసెన్స్డ్ వ్యాపారుల ద్వారా సేకరించిన సగటు మార్కెట్ సమాచారం మాత్రమే.</li>
+        <li>రోజువారీ నాణ్యత, డిమాండ్ మరియు మార్కెట్ వేలం ఆధారంగా ధరలలో మార్పులు ఉండవచ్చు. రైతులు విక్రయించే ముందు మార్కెట్ యార్డ్ నిబంధనలను పరిశీలించగలరు.</li>
+        <li>ఈ సమాచారం పూర్తిగా ఉచితం మరియు కేవలం రైతులకు అవగాహన కల్పించడం కోసమే సృష్టించబడింది.</li>
+      </ol>
+
+      <h3>చట్టపరమైన నిరాకరణ (Legal Disclaimer & Liability Notice)</h3>
+      <ol>
+        <li>ఈ వెబ్‌సైట్‌లో ప్రదర్శించబడే ధరలు గుంటూరు మిర్చి యార్డ్‌లోని మా అంతర్గత లైసెన్స్డ్ ట్రేడర్స్ గ్రూప్ అందించిన రోజువారీ సగటు వేలం సమాచారంపై ఆధారపడి ఉంటాయి. ఇది ప్రభుత్వ అధికారిక ప్రకటన కాదు.</li>
+        <li>మార్కెట్ ఒడిదుడుకులు, నాణ్యతా భేదాలు మరియు డిమాండ్ ఆధారంగా వ్యక్తిగత వ్యాపారుల కొనుగోలు ధరలు మారవచ్చు. రైతులు తమ పంటను విక్రయించే ముందే స్వయంగా ధరలను నిర్ధారించుకోవాల్సిందిగా కోరుచున్నాము.</li>
+        <li>ఈ సమాచారంలో ఏవైనా సాంకేతిక లోపాలు లేదా ఆలస్యాలు జరిగితే దానికి ఈ డిజిటల్ ప్లాట్‌ఫారమ్ ఎటువంటి ఆర్థిక లేదా చట్టపరమైన బాధ్యత వహించదు.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 Guntur Mirchi Live · రైతుల కోసం ఉచిత సేవ
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const priceData = [
+      {
+        title: "తేజ మిర్చి",
+        latin: "Teja S17 Variety",
+        trend: "up",
+        trendText: "▲ ₹500 పెరిగింది",
+        today: { medium: "₹17,500", best: "₹19,500", deluxe: "₹21,000" },
+        yesterday: { medium: "₹17,000", best: "₹19,000", deluxe: "₹20,500" }
+      },
+      {
+        title: "334 సన్నం మిర్చి",
+        latin: "Sannam 334",
+        trend: "flat",
+        trendText: "▬ స్థిరంగా ఉంది",
+        today: { medium: "₹19,000", best: "₹22,000", deluxe: "₹23,500" },
+        yesterday: { medium: "₹19,000", best: "₹22,000", deluxe: "₹23,500" }
+      },
+      {
+        title: "341 రకం మిర్చి",
+        latin: "Variety 341",
+        trend: "down",
+        trendText: "▼ ₹300 తగ్గింది",
+        today: { medium: "₹18,500", best: "₹20,500", deluxe: "₹21,500" },
+        yesterday: { medium: "₹18,800", best: "₹20,800", deluxe: "₹21,800" }
+      }
+    ];
+
+    let showYesterday = false;
+    let currentUtterance = null;
+    const cardsEl = document.getElementById("cards");
+    const toggleBtn = document.getElementById("toggleYesterdayBtn");
+    const speakBtn = document.getElementById("speakBtn");
+    const toast = document.getElementById("toast");
+
+    function showToast(message){
+      toast.textContent = message;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2200);
+    }
+
+    function badgeClass(trend){
+      if(trend === "up") return "badge up";
+      if(trend === "down") return "badge down";
+      return "badge flat";
+    }
+
+    function renderCards(){
+      cardsEl.innerHTML = "";
+      priceData.forEach(item => {
+        const prices = showYesterday ? item.yesterday : item.today;
+        const card = document.createElement("section");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="card-header">
+            <div class="title-wrap">
+              <h2>${item.title}</h2>
+              <div class="latin">${item.latin}</div>
+            </div>
+            <div class="${badgeClass(item.trend)}">${item.trendText}</div>
+          </div>
+
+          <div class="price-grid">
+            <div class="price">
+              <div class="price-label">మీడియం రకం</div>
+              <div class="price-value">${prices.medium}</div>
+            </div>
+            <div class="price">
+              <div class="price-label">బెస్ట్ రకం</div>
+              <div class="price-value">${prices.best}</div>
+            </div>
+            <div class="price">
+              <div class="price-label">డీలక్స్ రకం</div>
+              <div class="price-value">${prices.deluxe}</div>
+            </div>
+          </div>
+
+          <button class="share">వాట్సాప్‌లో ధరలు షేర్ చేయండి</button>
+        `;
+
+        card.querySelector(".share").addEventListener("click", () => {
+          const shareText =
+`${item.title}
+మీడియం రకం: ${prices.medium}
+బెస్ట్ రకం: ${prices.best}
+డీలక్స్ రకం: ${prices.deluxe}
+Guntur Mirchi Live`;
+          const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+          window.open(whatsappUrl, "_blank");
+        });
+
+        cardsEl.appendChild(card);
+      });
+    }
+
+    toggleBtn.addEventListener("click", () => {
+      showYesterday = !showYesterday;
+      toggleBtn.textContent = showYesterday ? "నేటి ధరలు చూడండి" : "నిన్నటి ధరలు చూడండి";
+      renderCards();
+      showToast(showYesterday ? "నిన్నటి ధరలు చూపిస్తున్నాం" : "నేటి ధరలు చూపిస్తున్నాం");
+    });
+
+    function getBestVoice() {
+      const voices = speechSynthesis.getVoices();
+      return (
+        voices.find(v => /te-IN|Telugu|telugu/i.test(v.lang + " " + v.name)) ||
+        voices.find(v => /hi-IN|Hindi/i.test(v.lang + " " + v.name)) ||
+        voices.find(v => /en-IN/i.test(v.lang + " " + v.name)) ||
+        voices[0]
+      );
+    }
+
+    function speakText(){
+      if(!("speechSynthesis" in window)){
+        showToast("మీ బ్రౌజర్‌లో వాయిస్ సపోర్ట్ లేదు");
+        return;
+      }
+
+      if (speechSynthesis.speaking) {
+        speechSynthesis.cancel();
+        speakBtn.textContent = "ధరలు వినండి";
+        showToast("వాయిస్ ఆపబడింది");
+        return;
+      }
+
+      const narration = `
+రైతన్నలకు నమస్కారం! గుంటూరు మిర్చి యార్డ్ నుంచి ఇవాల్టి లైవ్ ధరలు వినండి.
+ఈరోజు మన యార్డ్‌కు డెబ్బై ఐదు వేల మిర్చి బస్తాలు వచ్చాయి.
+మార్కెట్ ట్రేడింగ్ స్థిరంగా నడుస్తోంది.
+తేజ మిర్చి మీడియం రకం ${showYesterday ? "పదిహేడు వేల" : "పదిహేడు వేల ఐదు వందలు"} రూపాయలు,
+బెస్ట్ రకం ${showYesterday ? "పందొమ్మిది వేల" : "పందొమ్మిది వేల ఐదు వందలు"} రూపాయలు,
+డీలక్స్ రకం ${showYesterday ? "ఇరవై వేల ఐదు వందలు" : "ఇరవై ఒక్క వేల"} రూపాయలు.
+మూడు వందల ముప్పై నాలుగు సన్నం మిర్చి మీడియం రకం పంతొమ్మిది వేల,
+బెస్ట్ రకం ఇరవై రెండు వేల,
+డీలక్స్ రకం ఇరవై మూడు వేల ఐదు వందలు.
+మూడు వందల నలభై ఒకటి రకం మిర్చి మీడియం రకం ${showYesterday ? "పద్దెనిమిది వేల ఎనిమిది వందలు" : "పద్దెనిమిది వేల ఐదు వందలు"},
+బెస్ట్ రకం ${showYesterday ? "ఇరవై వేల ఎనిమిది వందలు" : "ఇరవై వేల ఐదు వందలు"},
+డీలక్స్ రకం ${showYesterday ? "ఇరవై ఒకటి వేల ఎనిమిది వందలు" : "ఇరవై ఒకటి వేల ఐదు వందలు"}.
+ధన్యవాదాలు.
+      `.trim();
+
+      currentUtterance = new SpeechSynthesisUtterance(narration);
+      currentUtterance.lang = "te-IN";
+      currentUtterance.rate = 0.82;
+      currentUtterance.pitch = 1;
+      currentUtterance.volume = 1;
+
+      const voice = getBestVoice();
+      if (voice) currentUtterance.voice = voice;
+
+      currentUtterance.onstart = () => {
+        speakBtn.textContent = "ఆపు";
+      };
+
+      currentUtterance.onend = () => {
+        speakBtn.textContent = "ధరలు వినండి";
+      };
+
+      currentUtterance.onerror = () => {
+        speakBtn.textContent = "ధరలు వినండి";
+        showToast("వాయిస్ ప్లే కాలేదు. Telugu voice install చేయండి");
+      };
+
+      speechSynthesis.cancel();
+      speechSynthesis.speak(currentUtterance);
+    }
+
+    speakBtn.addEventListener("click", speakText);
+
+    speechSynthesis.onvoiceschanged = () => {
+      speechSynthesis.getVoices();
+    };
+
+    function updateTeluguDate(){
+      const date = new Date();
+      const months = ["జనవరి","ఫిబ్రవరి","మార్చి","ఏప్రిల్","మే","జూన్","జూలై","ఆగస్టు","సెప్టెంబర్","అక్టోబర్","నవంబర్","డిసెంబర్"];
+      const days = ["ఆదివారం","సోమవారం","మంగళవారం","బుధవారం","గురువారం","శుక్రవారం","శనివారం"];
+      document.getElementById("dateText").textContent = `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+      document.getElementById("dayText").textContent = days[date.getDay()];
+    }
+
+    updateTeluguDate();
+    renderCards();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>గుంటూరు మిర్చి లైవ్</title>
+  <meta name="description" content="గుంటూరు మిర్చి మార్కెట్ లైవ్ ధరలు" />
+  <style>
+    :root{
+      --bg:#f6f7f2;
+      --card:#ffffff;
+      --card-2:#f2f7ef;
+      --text:#1e2a1f;
+      --muted:#5f6d61;
+      --line:#dde5da;
+      --green:#1f7a3f;
+      --green-dark:#155d2f;
+      --amber:#c58a12;
+      --red:#c54141;
+      --shadow:0 10px 30px rgba(18,40,22,.08);
+      --radius:18px;
+      --radius-sm:12px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, "Noto Sans Telugu", "Nirmala UI", sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.5;
+    }
+
+    a{text-decoration:none;color:inherit}
+    button,input,select,textarea{font:inherit}
+
+    .container{
+      width:min(1120px, calc(100% - 24px));
+      margin-inline:auto;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(10px);
+      background:rgba(246,247,242,.88);
+      border-bottom:1px solid rgba(221,229,218,.85);
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-height:68px;
+      padding:10px 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .brand-mark{
+      width:38px;height:38px;border-radius:12px;
+      display:grid;place-items:center;
+      background:linear-gradient(135deg,#e8f7e9,#d7efd9);
+      border:1px solid #d1e7d3;
+      font-size:18px;
+    }
+
+    .nav-links{
+      display:flex;
+      gap:8px;
+      overflow:auto;
+      margin-left:auto;
+      scrollbar-width:none;
+    }
+    .nav-links::-webkit-scrollbar{display:none}
+
+    .nav-links a{
+      padding:10px 14px;
+      border-radius:999px;
+      font-weight:700;
+      color:var(--muted);
+      white-space:nowrap;
+    }
+    .nav-links a:hover{background:#edf4ea;color:var(--green-dark)}
+
+    .hero{
+      padding:28px 0 18px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:18px;
+    }
+
+    .panel{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+
+    .hero-main{
+      padding:24px;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      background:#edf7ee;
+      color:var(--green-dark);
+      border:1px solid #d4ead7;
+      border-radius:999px;
+      font-weight:700;
+      font-size:14px;
+    }
+
+    h1{
+      font-size:clamp(28px,4vw,48px);
+      line-height:1.08;
+      margin:14px 0 10px;
+    }
+
+    .sub{
+      color:var(--muted);
+      max-width:62ch;
+      font-size:16px;
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .stat{
+      background:var(--card-2);
+      border:1px solid #deebdf;
+      border-radius:16px;
+      padding:14px;
+    }
+
+    .stat .k{
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:6px;
+      font-weight:700;
+    }
+
+    .stat .v{
+      font-size:22px;
+      font-weight:800;
+    }
+
+    .hero-side{
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .status-card{
+      padding:16px;
+      border-radius:16px;
+      background:linear-gradient(180deg,#f6fbf5,#eef8ee);
+      border:1px solid #dceadb;
+    }
+
+    .status-dot{
+      display:inline-block;
+      width:10px;height:10px;border-radius:50%;
+      background:var(--green);
+      margin-right:8px;
+    }
+
+    .section{
+      padding:14px 0;
+    }
+
+    .section-head{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:14px;
+    }
+
+    .section-head h2{
+      margin:0;
+      font-size:24px;
+    }
+
+    .section-head p{
+      margin:0;
+      color:var(--muted);
+    }
+
+    .tabs{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+
+    .tab-btn{
+      border:none;
+      border-radius:999px;
+      padding:10px 14px;
+      font-weight:800;
+      background:#eaf2e8;
+      color:#4c5c4e;
+      cursor:pointer;
+    }
+
+    .tab-btn.active{
+      background:var(--green);
+      color:#fff;
+    }
+
+    .price-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    .price-card{
+      padding:18px;
+    }
+
+    .price-top{
+      display:flex;
+      align-items:start;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:12px;
+    }
+
+    .price-card h3{
+      margin:0;
+      font-size:22px;
+    }
+
+    .latin{
+      color:var(--muted);
+      font-size:14px;
+      margin-top:4px;
+    }
+
+    .trend{
+      font-weight:800;
+      font-size:14px;
+      white-space:nowrap;
+    }
+
+    .up{color:var(--green)}
+    .flat{color:#707c73}
+    .down{color:var(--red)}
+
+    .tier{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:12px 0;
+      border-top:1px dashed var(--line);
+      gap:12px;
+    }
+
+    .tier strong{
+      font-size:20px;
+    }
+
+    .share-btn{
+      display:inline-flex;
+      justify-content:center;
+      align-items:center;
+      margin-top:14px;
+      width:100%;
+      background:#f1f7f1;
+      color:var(--green-dark);
+      border:1px solid #dbe9dc;
+      border-radius:14px;
+      padding:12px 14px;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .ads{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    .ad-card{
+      padding:18px;
+      background:linear-gradient(180deg,#fff,#f9fcf8);
+    }
+
+    .ad-tag{
+      color:var(--amber);
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.08em;
+    }
+
+    .ad-card h3{
+      margin:8px 0 6px;
+      font-size:19px;
+    }
+
+    .ad-card p{
+      margin:0 0 12px;
+      color:var(--muted);
+    }
+
+    .call-link{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:11px 14px;
+      border-radius:12px;
+      background:var(--green);
+      color:#fff;
+      font-weight:800;
+    }
+
+    .calendar-grid{
+      display:grid;
+      grid-template-columns:repeat(7,1fr);
+      gap:10px;
+    }
+
+    .day-card{
+      padding:14px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#fff;
+      min-height:112px;
+    }
+
+    .day-card.open{background:#f2fbf3}
+    .day-card.weekly{background:#fff8e7}
+    .day-card.holiday{background:#fff0f0}
+
+    .day-date{
+      font-size:14px;
+      color:var(--muted);
+      margin-bottom:8px;
+      font-weight:700;
+    }
+
+    .day-name{
+      font-size:18px;
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .day-note{
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    .calc-wrap{
+      display:grid;
+      grid-template-columns:1fr .9fr;
+      gap:14px;
+    }
+
+    .calc-card,.result-card,.help-card,.contact-card,.footer-card{
+      padding:20px;
+    }
+
+    label{
+      display:block;
+      margin-bottom:8px;
+      font-weight:800;
+    }
+
+    .field{
+      margin-bottom:14px;
+    }
+
+    select,input[type="number"],input[type="text"],input[type="tel"],textarea{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:13px 14px;
+      background:#fff;
+      color:var(--text);
+      outline:none;
+    }
+
+    textarea{min-height:120px;resize:vertical}
+
+    .bag-row{
+      display:grid;
+      grid-template-columns:48px 1fr 48px;
+      gap:10px;
+      align-items:center;
+    }
+
+    .icon-btn{
+      height:48px;
+      border:none;
+      border-radius:14px;
+      background:#edf4ea;
+      font-size:24px;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    .quick-picks{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:10px;
+    }
+
+    .chip{
+      padding:9px 12px;
+      border-radius:999px;
+      border:1px solid #d7e6d8;
+      background:#f7fbf6;
+      cursor:pointer;
+      font-weight:800;
+    }
+
+    .result-card{
+      background:linear-gradient(180deg,#f2fbf3,#eaf7eb);
+      border:1px solid #d8ebda;
+    }
+
+    .result-big{
+      font-size:clamp(28px,4vw,42px);
+      font-weight:900;
+      color:var(--green-dark);
+      margin:12px 0;
+    }
+
+    .helper{
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .help-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+    }
+
+    .help-link{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      min-height:72px;
+      background:#f5faf4;
+      border:1px solid #dceadd;
+      border-radius:16px;
+      padding:12px;
+      font-weight:800;
+      color:var(--green-dark);
+    }
+
+    .contact-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:14px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px 16px;
+      border-radius:14px;
+      font-weight:800;
+      cursor:pointer;
+      border:none;
+    }
+
+    .btn-primary{background:var(--green);color:#fff}
+    .btn-secondary{background:#eef5ec;color:var(--green-dark);border:1px solid #d9e7da}
+
+    .footer-card{
+      margin:20px 0 40px;
+    }
+
+    .footer-card p, .footer-card li{
+      color:var(--muted);
+    }
+
+    .floating-mic{
+      position:fixed;
+      right:16px;
+      bottom:16px;
+      width:64px;height:64px;
+      border:none;
+      border-radius:999px;
+      background:var(--green);
+      color:#fff;
+      font-size:26px;
+      box-shadow:0 18px 40px rgba(31,122,63,.28);
+      cursor:pointer;
+      z-index:60;
+    }
+
+    .muted{color:var(--muted)}
+    .small{font-size:14px}
+    .sponsored-title{
+      margin:0 0 12px;
+      font-size:20px;
+    }
+
+    @media (max-width: 920px){
+      .hero-grid,.calc-wrap,.price-grid,.ads,.help-grid{
+        grid-template-columns:1fr;
+      }
+      .calendar-grid{
+        grid-template-columns:repeat(2,1fr);
+      }
+      .stats{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 560px){
+      .container{width:min(100% - 16px, 1120px)}
+      .hero-main,.hero-side,.price-card,.ad-card,.calc-card,.result-card,.help-card,.contact-card,.footer-card{padding:16px}
+      .calendar-grid{grid-template-columns:1fr}
+      .nav{align-items:flex-start;flex-direction:column}
+      .nav-links{margin-left:0;width:100%}
+    }
+  </style>
+</head>
+<body>
+  <a href="#home" class="small" style="position:absolute;left:-9999px;">Skip to content</a>
+
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="గుంటూరు మిర్చి లైవ్ హోమ్">
+        <span class="brand-mark">🌶️</span>
+        <span>గుంటూరు మిర్చి లైవ్</span>
+      </a>
+      <nav class="nav-links" aria-label="ప్రధాన నావిగేషన్">
+        <a href="#home">హోమ్</a>
+        <a href="#prices">ధరలు</a>
+        <a href="#calendar">క్యాలెండర్</a>
+        <a href="#calculator">లెక్కింపు</a>
+        <a href="#contact">మాకు సందేశం</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="home" class="container">
+    <section class="hero">
+      <div class="hero-grid">
+        <article class="panel hero-main">
+          <span class="badge">నేటి అధికారిక ధరల పట్టిక - మే 2026</span>
+          <h1>గుంటూరు మిర్చి మార్కెట్ లైవ్ ధరలు</h1>
+          <p class="sub">చివరి అప్‌డేట్: నేడు సాయంత్రం 5:00 గంటలకు. రైతులకు సులభంగా అర్థమయ్యే విధంగా నేటి ధరలు, క్యాలెండర్, లెక్కింపు యంత్రం, సహాయ కేంద్రం అన్నీ ఒకే చోట.</p>
+
+          <div class="stats">
+            <div class="stat">
+              <div class="k">మార్కెట్ తేదీ</div>
+              <div class="v" id="todayDate">26 మే 2026</div>
+            </div>
+            <div class="stat">
+              <div class="k">మార్కెట్ స్థితి</div>
+              <div class="v" id="marketStateText">మార్కెట్ తెరిచి ఉంది</div>
+            </div>
+            <div class="stat">
+              <div class="k">నేటి బస్తాలు</div>
+              <div class="v">75,000 బస్తాలు</div>
+            </div>
+          </div>
+        </article>
+
+        <aside class="panel hero-side">
+          <div class="status-card">
+            <div style="font-weight:800;margin-bottom:10px;">
+              <span class="status-dot" id="statusDot"></span>
+              <span id="statusLine">మార్కెట్ తెరిచి ఉంది</span>
+            </div>
+            <div class="muted">మార్కెట్ ట్రేడింగ్ సరళి: స్థిరంగా ఉంది</div>
+          </div>
+
+          <div class="status-card">
+            <div style="font-weight:800;margin-bottom:8px;">త్వరిత సూచన</div>
+            <div class="muted small">1 బస్తా (Bag) ≈ 40 కిలోలు • 1 క్వింటాల్ ≈ 2.5 బస్తాలు</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="prices" class="section">
+      <div class="section-head">
+        <div>
+          <h2>నేటి ధరలు</h2>
+          <p>విభిన్న రకాలు మరియు నాణ్యతల ప్రకారం ధరలు.</p>
+        </div>
+        <div class="tabs" aria-label="ధరల ట్యాబ్స్">
+          <button class="tab-btn active" data-tab="today">నేటి ధరలు</button>
+          <button class="tab-btn" data-tab="yesterday">నిన్నటి ధరలు</button>
+        </div>
+      </div>
+
+      <div class="price-grid" id="priceGrid"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="sponsored-title">ప్రాయోజిత ప్రకటనలు (SPONSORED)</h2>
+          <p>స్థానిక సహకారం</p>
+        </div>
+      </div>
+      <div class="ads" id="adsGrid"></div>
+      <p class="muted small">ఈ ప్రకటనలు రైతులకు ఉపయోగపడే స్థానిక సేవల కోసం. మీ వ్యాపార ప్రకటన కోసం మాకు సందేశం పంపండి.</p>
+    </section>
+
+    <section id="calendar" class="section">
+      <div class="section-head">
+        <div>
+          <h2>🗓️ మార్కెట్ క్యాలెండర్ - రాబోయే 14 రోజులు</h2>
+          <p>ఆకుపచ్చ = మార్కెట్ తెరిచి ఉంది • పసుపు = వారపు సెలవు • ఎరుపు = అధికారిక సెలవు</p>
+        </div>
+      </div>
+      <div class="calendar-grid" id="calendarGrid"></div>
+      <p class="muted small">* సెలవుల జాబితా త్వరలో అధికారిక మార్కెట్ నోటీసు ఆధారంగా అప్‌డేట్ చేయబడుతుంది.</p>
+    </section>
+
+    <section id="calculator" class="section">
+      <div class="section-head">
+        <div>
+          <h2>🧮 నా పంట లెక్కింపు యంత్రం</h2>
+          <p>మీ బస్తాల సంఖ్య ఎంచుకోండి - మొత్తం రాబడిని తెలుసుకోండి.</p>
+        </div>
+      </div>
+
+      <div class="calc-wrap">
+        <div class="panel calc-card">
+          <div class="field">
+            <label for="variety">1. రకాన్ని ఎంచుకోండి</label>
+            <select id="variety"></select>
+          </div>
+
+          <div class="field">
+            <label for="quality">2. నాణ్యత ఎంచుకోండి</label>
+            <select id="quality">
+              <option value="medium">మీడియం</option>
+              <option value="best">బెస్ట్</option>
+              <option value="deluxe">డీలక్స్</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="bags">3. ఎన్ని బస్తాలు?</label>
+            <div class="bag-row">
+              <button class="icon-btn" id="minusBtn" aria-label="ఒక బస్తా తగ్గించు">−</button>
+              <input id="bags" type="number" min="1" max="99999" value="10" />
+              <button class="icon-btn" id="plusBtn" aria-label="ఒక బస్తా పెంచు">+</button>
+            </div>
+            <div class="quick-picks">
+              <button class="chip" data-bags="10">10</button>
+              <button class="chip" data-bags="25">25</button>
+              <button class="chip" data-bags="50">50</button>
+              <button class="chip" data-bags="100">100</button>
+              <button class="chip" data-bags="200">200</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel result-card">
+          <div class="muted">ఎంచుకున్న లెక్కింపు</div>
+          <div id="calcSummary" style="margin-top:8px;font-weight:800;font-size:20px;"></div>
+          <div class="result-big" id="calcTotal">₹1,95,000</div>
+          <div class="helper">* ఇది అంచనా మాత్రమే. వాస్తవ ధర వేలంలో మారవచ్చు.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2>📞 రైతు సహాయ కేంద్రం</h2>
+          <p>ఏదైనా సందేహం ఉంటే నేరుగా ఫోన్ చేయండి.</p>
+        </div>
+      </div>
+
+      <div class="help-grid">
+        <a class="panel help-link" href="tel:18004251661">📞 కిసాన్ హెల్ప్‌లైన్: 1800-425-1661</a>
+        <a class="panel help-link" href="tel:1800180551">🌱 వ్యవసాయ సలహా: 1800-180-1551</a>
+      </div>
+      <div class="panel help-card" style="margin-top:14px;">
+        <strong>📏 కొలతలు తెలుసుకోండి</strong>
+        <p class="muted">1 బస్తా (Bag) ≈ 40 కిలోలు • 1 క్వింటాల్ ≈ 2.5 బస్తాలు</p>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="section-head">
+        <div>
+          <h2>✉️ మాకు సందేశం పంపండి</h2>
+          <p>మీ సందేహాలు, సూచనలు లేదా ఫిర్యాదులు మాకు తెలియజేయండి.</p>
+        </div>
+      </div>
+
+      <div class="panel contact-card">
+        <div class="field">
+          <label for="name">పేరు</label>
+          <input id="name" type="text" placeholder="మీ పేరు" />
+        </div>
+        <div class="field">
+          <label for="phone">ఫోన్ నంబర్</label>
+          <input id="phone" type="tel" placeholder="10 అంకెల మొబైల్ నంబర్" maxlength="10" />
+        </div>
+        <div class="field">
+          <label for="village">గ్రామం</label>
+          <input id="village" type="text" placeholder="మీ గ్రామం పేరు" />
+        </div>
+        <div class="field">
+          <label for="message">సందేశం</label>
+          <textarea id="message" placeholder="మీ సందేహం లేదా సూచన"></textarea>
+        </div>
+
+        <div class="contact-actions">
+          <button class="btn btn-primary" id="waSubmit">📱 వాట్సాప్‌లో పంపండి</button>
+          <a class="btn btn-secondary" href="mailto:info@gunturmirchilive.in">✉️ ఈమెయిల్ పంపండి</a>
+          <a class="btn btn-secondary" href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer">📞 వాట్సాప్‌లో సంప్రదించండి</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel footer-card">
+      <h2 style="margin-top:0;">🙏 గౌరవ వందనాలు & కృతజ్ఞతలు</h2>
+      <p>గుంటూరు వ్యవసాయ మార్కెట్ కమిటీ (AMC) నూతన చైర్మన్ వర్యులు గౌరవనీయులు శ్రీ కుర్రా అప్పారావు గారికి, ఆంధ్రప్రదేశ్ ప్రభుత్వానికి మరియు స్థానిక ప్రజాప్రతినిధులకు మా హృదయపూర్వక ధన్యవాదాలు.</p>
+
+      <h3>నిబంధనలు మరియు షరతులు</h3>
+      <ul>
+        <li>ఈ వెబ్‌సైట్‌లో చూపించే ధరలు సగటు మార్కెట్ సమాచారం మాత్రమే.</li>
+        <li>రోజువారీ నాణ్యత, డిమాండ్ మరియు మార్కెట్ వేలం ఆధారంగా ధరలలో మార్పులు ఉండవచ్చు.</li>
+        <li>ఈ సమాచారం పూర్తిగా ఉచితం మరియు రైతులకు అవగాహన కల్పించడం కోసమే.</li>
+      </ul>
+
+      <h3>చట్టపరమైన నిరాకరణ</h3>
+      <ul>
+        <li>ఇది ప్రభుత్వ అధికారిక ప్రకటన కాదు.</li>
+        <li>రైతులు విక్రయానికి ముందు స్వయంగా ధరలను నిర్ధారించుకోవాలి.</li>
+        <li>సాంకేతిక లోపాలు లేదా ఆలస్యాలపై ఈ ప్లాట్‌ఫారమ్ బాధ్యత వహించదు.</li>
+      </ul>
+
+      <p class="small">© 2026 గుంటూరు మిర్చి లైవ్ • రైతుల కోసం ఉచితంగా</p>
+    </section>
+  </main>
+
+  <button class="floating-mic" id="ttsBtn" aria-label="ధరలు వినండి" title="ధరలు వినండి">🎙️</button>
+
+  <script>
+    const PRICE_DATA = {
+      today: [
+        {
+          key: "teja",
+          name: "తేజ మిర్చి",
+          latin: "Teja S17 Variety",
+          trendText: "▲ ₹500 పెరిగింది",
+          trendClass: "up",
+          prices: { medium: 17500, best: 19500, deluxe: 21000 }
+        },
+        {
+          key: "334",
+          name: "334 సన్నం మిర్చి",
+          latin: "Sannam 334",
+          trendText: "▬ స్థిరంగా ఉంది",
+          trendClass: "flat",
+          prices: { medium: 19000, best: 22000, deluxe: 23500 }
+        },
+        {
+          key: "341",
+          name: "341 రకం మిర్చి",
+          latin: "Variety 341",
+          trendText: "▼ ₹300 తగ్గింది",
+          trendClass: "down",
+          prices: { medium: 18500, best: 20500, deluxe: 21500 }
+        }
+      ],
+      yesterday: [
+        {
+          key: "teja",
+          name: "తేజ మిర్చి",
+          latin: "Teja S17 Variety",
+          trendText: "నిన్నటి ధర",
+          trendClass: "flat",
+          prices: { medium: 17000, best: 19000, deluxe: 20500 }
+        },
+        {
+          key: "334",
+          name: "334 సన్నం మిర్చి",
+          latin: "Sannam 334",
+          trendText: "నిన్నటి ధర",
+          trendClass: "flat",
+          prices: { medium: 19000, best: 22000, deluxe: 23500 }
+        },
+        {
+          key: "341",
+          name: "341 రకం మిర్చి",
+          latin: "Variety 341",
+          trendText: "నిన్నటి ధర",
+          trendClass: "flat",
+          prices: { medium: 18800, best: 20800, deluxe: 21800 }
+        }
+      ]
+    };
+
+    const SPONSOR_ADS = [
+      {
+        title: "శ్రీ లక్ష్మి ఎరువుల దుకాణం",
+        desc: "మిర్చి పంటకు ప్రత్యేక ఎరువులు • గుంటూరు మిర్చి యార్డ్ దగ్గర",
+        phone: "919000000001"
+      },
+      {
+        title: "వెంకటేశ్వర ట్రాన్స్‌పోర్ట్",
+        desc: "మిర్చి బస్తాల రవాణా • రాష్ట్రవ్యాప్తంగా • 24 గంటలు",
+        phone: "919000000002"
+      },
+      {
+        title: "రైతు బీమా & లోన్ సహాయం",
+        desc: "పంట బీమా • తక్కువ వడ్డీ లోన్లు • ఉచిత సలహా",
+        phone: "919000000003"
+      }
+    ];
+
+    const MARKET_HOLIDAYS = [
+      { date: "2026-06-05", note: "అధికారిక సెలవు" }
+    ];
+
+    const TELUGU_MONTHS = ["జనవరి","ఫిబ్రవరి","మార్చి","ఏప్రిల్","మే","జూన్","జూలై","ఆగస్టు","సెప్టెంబర్","అక్టోబర్","నవంబర్","డిసెంబర్"];
+    const TELUGU_DAYS = ["ఆదివారం","సోమవారం","మంగళవారం","బుధవారం","గురువారం","శుక్రవారం","శనివారం"];
+
+    let activeTab = "today";
+    let speaking = false;
+    let speechTimeout = null;
+
+    const priceGrid = document.getElementById("priceGrid");
+    const tabs = document.querySelectorAll(".tab-btn");
+    const adsGrid = document.getElementById("adsGrid");
+    const calendarGrid = document.getElementById("calendarGrid");
+
+    const varietySelect = document.getElementById("variety");
+    const qualitySelect = document.getElementById("quality");
+    const bagsInput = document.getElementById("bags");
+    const calcSummary = document.getElementById("calcSummary");
+    const calcTotal = document.getElementById("calcTotal");
+
+    function formatINR(value){
+      return "₹" + Number(value).toLocaleString("en-IN");
+    }
+
+    function teluguDate(date){
+      return `${date.getDate()} ${TELUGU_MONTHS[date.getMonth()]} ${date.getFullYear()}`;
+    }
+
+    function renderPrices(){
+      priceGrid.innerHTML = "";
+      PRICE_DATA[activeTab].forEach(item => {
+        const el = document.createElement("article");
+        el.className = "panel price-card";
+        el.innerHTML = `
+          <div class="price-top">
+            <div>
+              <h3>${item.name}</h3>
+              <div class="latin">${item.latin}</div>
+            </div>
+            <div class="trend ${item.trendClass}">${item.trendText}</div>
+          </div>
+
+          <div class="tier"><span>మీడియం రకం</span><strong>${formatINR(item.prices.medium)}</strong></div>
+          <div class="tier"><span>బెస్ట్ రకం</span><strong>${formatINR(item.prices.best)}</strong></div>
+          <div class="tier"><span>డీలక్స్ రకం</span><strong>${formatINR(item.prices.deluxe)}</strong></div>
+
+          <button class="share-btn" data-share="${item.name}">వాట్సాప్‌లో ధరలు షేర్ చేయండి</button>
+        `;
+        priceGrid.appendChild(el);
+      });
+
+      document.querySelectorAll(".share-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const item = PRICE_DATA[activeTab].find(x => x.name === btn.dataset.share);
+          const text = [
+            "గుంటూరు మిర్చి లైవ్ ధరలు",
+            item.name,
+            `మీడియం: ${formatINR(item.prices.medium)}`,
+            `బెస్ట్: ${formatINR(item.prices.best)}`,
+            `డీలక్స్: ${formatINR(item.prices.deluxe)}`
+          ].join("\n");
+          const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+          window.open(url, "_blank", "noopener,noreferrer");
+        });
+      });
+    }
+
+    tabs.forEach(btn => {
+      btn.addEventListener("click", () => {
+        tabs.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        activeTab = btn.dataset.tab;
+        renderPrices();
+        updateCalculator();
+      });
+    });
+
+    function renderAds(){
+      adsGrid.innerHTML = SPONSOR_ADS.map(ad => `
+        <article class="panel ad-card">
+          <div class="ad-tag">స్థానిక సహకారం</div>
+          <h3>${ad.title}</h3>
+          <p>${ad.desc}</p>
+          <a class="call-link" href="tel:${ad.phone}">📞 ఇప్పుడే కాల్ చేయండి</a>
+        </article>
+      `).join("");
+    }
+
+    function renderCalendar(){
+      const start = new Date();
+      start.setHours(0,0,0,0);
+      calendarGrid.innerHTML = "";
+
+      for(let i=0;i<14;i++){
+        const d = new Date(start);
+        d.setDate(start.getDate()+i);
+        const iso = d.toISOString().slice(0,10);
+        const isSunday = d.getDay() === 0;
+        const holiday = MARKET_HOLIDAYS.find(h => h.date === iso);
+
+        let cls = "open";
+        let note = "";
+        if(holiday){
+          cls = "holiday";
+          note = holiday.note;
+        } else if(isSunday){
+          cls = "weekly";
+          note = "ఆదివారం - వారపు సెలవు";
+        }
+
+        const el = document.createElement("div");
+        el.className = `day-card ${cls}`;
+        el.innerHTML = `
+          <div class="day-date">${teluguDate(d)}</div>
+          <div class="day-name">${TELUGU_DAYS[d.getDay()]}</div>
+          <div class="day-note">${note || "మార్కెట్ తెరిచి ఉంది"}</div>
+        `;
+        calendarGrid.appendChild(el);
+      }
+
+      updateMarketStatus();
+    }
+
+    function updateMarketStatus(){
+      const now = new Date();
+      const iso = now.toISOString().slice(0,10);
+      const holiday = MARKET_HOLIDAYS.find(h => h.date === iso);
+      const isSunday = now.getDay() === 0;
+
+      const line = document.getElementById("statusLine");
+      const dot = document.getElementById("statusDot");
+      const state = document.getElementById("marketStateText");
+      const date = document.getElementById("todayDate");
+
+      date.textContent = `${teluguDate(now)} | ${TELUGU_DAYS[now.getDay()]}`;
+
+      if(holiday){
+        line.textContent = "అధికారిక సెలవు";
+        state.textContent = "మార్కెట్ సెలవు";
+        dot.style.background = "var(--red)";
+      } else if(isSunday){
+        line.textContent = "వారపు సెలవు";
+        state.textContent = "మార్కెట్ సెలవు";
+        dot.style.background = "var(--amber)";
+      } else {
+        line.textContent = "మార్కెట్ తెరిచి ఉంది";
+        state.textContent = "మార్కెట్ తెరిచి ఉంది";
+        dot.style.background = "var(--green)";
+      }
+    }
+
+    function initVarietyOptions(){
+      varietySelect.innerHTML = PRICE_DATA[activeTab].map(v =>
+        `<option value="${v.key}">${v.name}</option>`
+      ).join("");
+    }
+
+    function updateCalculator(){
+      const currentList = PRICE_DATA[activeTab];
+      initVarietyOptions();
+      const selectedKey = varietySelect.value || currentList[0].key;
+      varietySelect.value = currentList.some(v => v.key === selectedKey) ? selectedKey : currentList[0].key;
+
+      const variety = currentList.find(v => v.key === varietySelect.value) || currentList[0];
+      const quality = qualitySelect.value;
+      const bags = Math.max(1, Number(bagsInput.value) || 1);
+      bagsInput.value = bags;
+
+      const unit = variety.prices[quality];
+      const total = unit * bags;
+
+      const qualityMap = {
+        medium: "మీడియం",
+        best: "బెస్ట్",
+        deluxe: "డీలక్స్"
+      };
+
+      calcSummary.textContent = `${variety.name} • ${bags} బస్తాలు × ${formatINR(unit)} (${qualityMap[quality]})`;
+      calcTotal.textContent = formatINR(total);
+    }
+
+    document.getElementById("minusBtn").addEventListener("click", () => {
+      bagsInput.value = Math.max(1, (Number(bagsInput.value) || 1) - 1);
+      updateCalculator();
+    });
+
+    document.getElementById("plusBtn").addEventListener("click", () => {
+      bagsInput.value = (Number(bagsInput.value) || 1) + 1;
+      updateCalculator();
+    });
+
+    document.querySelectorAll(".chip").forEach(chip => {
+      chip.addEventListener("click", () => {
+        bagsInput.value = chip.dataset.bags;
+        updateCalculator();
+      });
+    });
+
+    [varietySelect, qualitySelect, bagsInput].forEach(el => {
+      el.addEventListener("input", updateCalculator);
+      el.addEventListener("change", updateCalculator);
+    });
+
+    document.getElementById("waSubmit").addEventListener("click", () => {
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const village = document.getElementById("village").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      if(!name || !phone || !village || !message){
+        alert("దయచేసి అన్ని వివరాలు పూరించండి.");
+        return;
+      }
+
+      if(!/^\d{10}$/.test(phone)){
+        alert("దయచేసి సరైన 10 అంకెల ఫోన్ నంబర్ ఇవ్వండి.");
+        return;
+      }
+
+      const text = [
+        "గుంటూరు మిర్చి లైవ్ - కొత్త సందేశం",
+        `పేరు: ${name}`,
+        `ఫోన్: ${phone}`,
+        `గ్రామం: ${village}`,
+        `సందేశం: ${message}`
+      ].join("\n");
+
+      window.open(`https://wa.me/919999999999?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
+    });
+
+    function stopSpeech(){
+      speaking = false;
+      clearTimeout(speechTimeout);
+      window.speechSynthesis.cancel();
+      document.getElementById("ttsBtn").textContent = "🎙️";
+    }
+
+    function getTeluguVoice(){
+      const voices = window.speechSynthesis.getVoices();
+      return voices.find(v => /te-IN/i.test(v.lang))
+        || voices.find(v => /Telugu/i.test(v.name))
+        || voices.find(v => /hi-IN/i.test(v.lang))
+        || voices[0];
+    }
+
+    function speakTextChunks(text){
+      stopSpeech();
+      const parts = text.split(/[.!\n]+/).map(s => s.trim()).filter(Boolean);
+      const voice = getTeluguVoice();
+      let index = 0;
+      speaking = true;
+      document.getElementById("ttsBtn").textContent = "⏹";
+
+      function next(){
+        if(!speaking || index >= parts.length){
+          stopSpeech();
+          return;
+        }
+        const utter = new SpeechSynthesisUtterance(parts[index]);
+        if(voice) utter.voice = voice;
+        utter.lang = voice?.lang || "te-IN";
+        utter.rate = 0.95;
+        utter.pitch = 1;
+        utter.onend = () => {
+          index++;
+          speechTimeout = setTimeout(next, 120);
+        };
+        utter.onerror = () => stopSpeech();
+        window.speechSynthesis.speak(utter);
+      }
+
+      speechTimeout = setTimeout(next, 120);
+    }
+
+    function speakPrices(){
+      const list = PRICE_DATA[activeTab];
+      const intro = activeTab === "today"
+        ? "రైతన్నలకు నమస్కారం. ఇవాల్టి గుంటూరు మార్కెట్ మిర్చి ధరలు ఇవి."
+        : "రైతన్నలకు నమస్కారం. నిన్నటి గుంటూరు మార్కెట్ మిర్చి ధరలు ఇవి.";
+
+      const body = list.map(item =>
+        `${item.name}. మీడియం రకం ${formatINR(item.prices.medium)}. బెస్ట్ రకం ${formatINR(item.prices.best)}. డీలక్స్ రకం ${formatINR(item.prices.deluxe)}.`
+      ).join(" ");
+
+      speakTextChunks(`${intro} ${body}`);
+    }
+
+    document.getElementById("ttsBtn").addEventListener("click", () => {
+      if(speaking){
+        stopSpeech();
+      } else {
+        speakPrices();
+      }
+    });
+
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.getVoices();
+      window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+    }
+
+    renderPrices();
+    renderAds();
+    renderCalendar();
+    initVarietyOptions();
+    updateCalculator();
+  </script>
+</body>
+</html>
